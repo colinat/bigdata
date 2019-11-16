@@ -1,0 +1,15 @@
+{
+	"name": "Quandl",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Quandl",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"requestMethod": "GET"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
