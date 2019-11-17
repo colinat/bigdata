@@ -1,0 +1,13 @@
+{
+	"name": "Quandl",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "RestService",
+		"typeProperties": {
+			"url": "https://www.quandl.com/api/v3/datasets/BSE/BOM539917.json?start_date=2019-11-01&end_date=2019-11-15&order=asc&column_index=4&transformation=rdiff&api_key=psDxV-t-42ZaBjdSzrmz",
+			"enableServerCertificateValidation": false,
+			"authenticationType": "Anonymous"
+		}
+	}
+}
