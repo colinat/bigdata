@@ -28,6 +28,9 @@ g_df  = graph.adjacency(myAdjacencyMatrix,
 link = get.data.frame(g_df)
 link$colour = ifelse(link$weight > 0, "deepskyblue4", "red")
 
+threshold = 0.5 # set weight threshold for existance of links by weight from absolute 0 to 1
+link = link %>% filter(abs(weight) >= threshold)
+
 node = tibble(name = colnames(df[,-1]))
 
 write.csv(link, "link.csv")
