@@ -11,7 +11,7 @@ df = stockdata %>%
   select(Date, Ticker, PxChange) %>%
   spread(Ticker, PxChange, convert = TRUE) %>%
   arrange(desc(Date)) %>%
-  head(n=5)
+  head(n=5) # 5 days
   
 glimpse(df)
 str(df)
@@ -26,10 +26,13 @@ g_df  = graph.adjacency(myAdjacencyMatrix,
                       add.colnames = NULL)
 
 link = get.data.frame(g_df)
+
+link$cor_level = abs(link$weight)
+link$cor_type = ifelse(link$weight > 0, 1, -1)
 link$colour = ifelse(link$weight > 0, "deepskyblue4", "red")
 
-threshold = 0.5 # set weight threshold for existance of links by weight from absolute 0 to 1
-link = link %>% filter(abs(weight) >= threshold)
+threshold = 0.6 # set weight threshold for existance of links by weight from absolute 0 to 1
+link = link %>% filter(cor_level >= threshold)
 
 node = tibble(name = colnames(df[,-1]))
 
@@ -44,10 +47,10 @@ g
 plot(g,
      layout = layout.circle, # default layout.auto, lgl)
      edge.color = E(g)$colour, 
-     edge.width = abs(E(g)$weight*5),
+     edge.width = E(g)$cor_level*5,
      
      vertex.frame.color = "deepskyblue4",
-     vertex.color=rgb(red=0.1,green=0.7,blue=0.8,alpha=0.5),
+     vertex.color=rgb(red=0.1,green=0.6,blue=0.8,alpha=0.8),
      vertex.label.family = "Arial",
      vertex.size = 30, #default 15
      vertex.label.font = 1, # 1: for plain text
@@ -75,7 +78,7 @@ clique.number(g)
 cliques(g, min=6)
 
 # How about we want to find smaller cliques
-cliques(g, min=4)
+cliques(g, min=3)
 
 #maximal.cliques finds all maximal cliques in the input graph.
 #A clique in maximal if it cannot be extended to a larger clique. 
