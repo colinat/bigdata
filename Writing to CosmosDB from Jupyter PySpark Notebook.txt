@@ -1,0 +1,24 @@
+%%configure
+{ "name":"Spark-to-Cosmos_DB_Connector",
+  "conf": {
+    "spark.jars.packages": "com.microsoft.azure:azure-cosmosdb-spark_2.3.0_2.11:1.3.3",
+    "spark.jars.excludes": "org.scala-lang:scala-reflect"
+   }
+}
+
+# Check spark version matches that of the cluster. Also ensures connector version exists for the appropriate Spark version
+
+
+writeConfig = {
+ "Endpoint" : "https://bigdatagraphdb.documents.azure.com:443/",
+ "Masterkey" : "Bfh3J1AgMB2kpCO4sWBrkDo6uG2KXs1bgs1gjIgxsgN4lffCVpL6NKfLhqthzi94B9Pdy66kexOSUHpkuOKEUA==",
+ "Database" : "graphdb",
+ "Collection" : "stocks",
+ "Upsert" : "true"
+}
+
+# Retrieve appropriate param values from CosmosDB
+
+
+# Write to Cosmos DB from the DataFrame in Spark
+df.write.format("com.microsoft.azure.cosmosdb.spark").options(**writeConfig).save()
