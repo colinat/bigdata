@@ -26,18 +26,23 @@ g_df  = graph.adjacency(myAdjacencyMatrix,
                       add.colnames = NULL)
 
 link = get.data.frame(g_df)
+summary(link)
+link$weight = ifelse(is.na(link$weight), 0, link$weight)
+head(link)
 
+colnames(link) = c("src", "dst", "weight")
 link$cor_level = abs(link$weight)
 link$cor_type = ifelse(link$weight > 0, 1, -1)
-link$colour = ifelse(link$weight > 0, "deepskyblue4", "red")
+link$colour = ifelse(link$weight > 0, "blue", "red")
 
 threshold = 0.6 # set weight threshold for existance of links by weight from absolute 0 to 1
 link = link %>% filter(cor_level >= threshold)
 
-node = tibble(name = colnames(df[,-1]))
+node = tibble(id = colnames(df[,-1]))
+head(node)
 
-write.csv(link, "link.csv")
-write.csv(node, "node.csv")
+write.csv(link, "link.csv", row.names = FALSE)
+write.csv(node, "node.csv", row.names = FALSE)
 #node_n <- read_csv("nodes.csv")
 #link_n <- read_csv("links.csv")
 
@@ -47,14 +52,15 @@ g
 plot(g,
      layout = layout.circle, # default layout.auto, lgl)
      edge.color = E(g)$colour, 
-     edge.width = E(g)$cor_level*5,
+     edge.width = E(g)$cor_level*2,
+     edge.curved = 0.5,
      
      vertex.frame.color = "deepskyblue4",
      vertex.color=rgb(red=0.1,green=0.6,blue=0.8,alpha=0.8),
      vertex.label.family = "Arial",
-     vertex.size = 30, #default 15
+     vertex.size = 1, #default 15
      vertex.label.font = 1, # 1: for plain text
-     vertex.label.cex = 0.6 # Font size
+     vertex.label.cex = 0.8 # Font size
 )
 
 
