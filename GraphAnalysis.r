@@ -44,6 +44,10 @@ link <- read.csv("edges.csv", header = TRUE)
 link$direction = if_else(link$weight > 0,1,-1)
 link$weight = abs(link$weight)
 
+## filter off edges with correlation < 0.6
+link <- link %>%
+  filter(abs_weight > 0.6)
+
 g <- graph.data.frame(link, node, directed = F)
 g
 
