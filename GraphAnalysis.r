@@ -28,14 +28,14 @@ library(AzureStor)
 download_from_url(
   "https://bigdataissstorageasia.blob.core.windows.net/graphnodes/nodes.csv",
   "nodes.csv",
-  key="bbtD6brqITz4QHFU2tR4VZG5dN3DvAewjyuyHt/6+BpgUJrKcVCC4iJtZNtlNLOpYSJDhg4FLg0Avf3e+uJoUA==", 
+  key="zm5Yr4YadxB/ZEvhyOISOw9hh5MCeVUA07A76EsBVBpX/jP6aDtHRBUCGIE5cp1mMMyzQQ2A7DCOz632hLa59A==", 
   overwrite=T)
 
 # edges.csv
 download_from_url(
   "https://bigdataissstorageasia.blob.core.windows.net/graphedges/edges.csv",
   "edges.csv",
-  key="bbtD6brqITz4QHFU2tR4VZG5dN3DvAewjyuyHt/6+BpgUJrKcVCC4iJtZNtlNLOpYSJDhg4FLg0Avf3e+uJoUA==", 
+  key="zm5Yr4YadxB/ZEvhyOISOw9hh5MCeVUA07A76EsBVBpX/jP6aDtHRBUCGIE5cp1mMMyzQQ2A7DCOz632hLa59A==", 
   overwrite=T)
 
 
@@ -47,6 +47,12 @@ link$weight = abs(link$weight)
 ## filter off edges with correlation < 0.6
 link <- link %>%
   filter(abs_weight > 0.6)
+
+Questions = c("Find out basket of stocks which are highly correlated to each other across sectors/regions",
+              "Find out highly influential stocks",
+              "Find out most stable stocks (possibly alpha stocks) with least correlation to other stocks",
+              "Stocks which are more representative of broader market(possibly index stocks)",
+              "How connected a region/sector is?")
 
 g <- graph.data.frame(link, node, directed = F)
 g
@@ -66,8 +72,9 @@ plot(g,
 )
 
 # 1. Maximal Clique
-largest_cliques(g)
-# date: 21-Nov-19
+lc23 = largest_cliques(g)
+lc23
+lc22 = "clique_1 = 1398.HK   000333.SZ 000651.SZ 0386.HK    and    clique_2 = 000002.SZ 000651.SZ 0883.HK   2628.HK"
 #[[1]]
 #+ 4/30 vertices, named, from eb5624a:
 #  [1] 0386.HK   000651.SZ 1398.HK   000333.SZ
@@ -75,59 +82,73 @@ largest_cliques(g)
 #[[2]]
 #+ 4/30 vertices, named, from eb5624a:
 #  [1] 000002.SZ 000651.SZ 2628.HK   0883.HK
-
-# date: 22-Nov-19
-#[[1]]
-#+ 4/30 vertices, named, from 4cd411f:
-#  [1] 1398.HK   000333.SZ 000651.SZ 0386.HK  
-
-#[[2]]
-#+ 4/30 vertices, named, from 4cd411f:
-#  [1] 000002.SZ 000651.SZ 0883.HK   2628.HK
-
+lc21 = "clique_1 = 0386.HK   000651.SZ 1398.HK   000333.SZ    and    clique_2 = 000002.SZ 000651.SZ 2628.HK   0883.HK"
 
 #2&3. Vertices with highest degree and lowest degree
-V(g)$name[degree(g)==max(degree(g))] # [1] "000002.SZ"
-V(g)$name[degree(g)==min(degree(g))] # [1] "RDSA.L"
+highest_degree23 = V(g)$name[degree(g)==max(degree(g))] # [1] "000002.SZ"
+lowest_degree23 = V(g)$name[degree(g)==min(degree(g))] # [1] "RDSA.L"
+highest_degree23
+lowest_degree23
 
+highest_degree22 = "000002.SZ"
+lowest_degree22 = "RDSA.L"
+
+highest_degree21 = "000002.SZ"
+lowest_degree21 = "RDSA.L"
 
 #4. Vertices with highest centrality
 degree.cent <- centr_degree(g, mode = "all")
 degree.cent$res
-
-# date: 21-Nov-19
 #[1]  2  5  7  9  2  4  5  9  5  3  4  7 10  7  3  9  5  7  3  3  3  8  8  4  7  1  9  3  6  2
 
-# date: 22-Nov-19
-# [1]  3  3  3  8  8  4  5  9  7  1  5  3 10  7  9  3  6  2  4  7  3  9  5  7  2  5  7  9  2  4
-
 # Highest and lowest closeness 
-V(g)$name[closeness(g, mode="all")==max(closeness(g, mode="all"))] # [1] "6098.T"
-V(g)$name[closeness(g, mode="all")==min(closeness(g, mode="all"))] # [1] "RDSA.L"
+highest_closeness23 = V(g)$name[closeness(g, mode="all")==max(closeness(g, mode="all"))] # [1] "6098.T"
+lowest_closeness23 = V(g)$name[closeness(g, mode="all")==min(closeness(g, mode="all"))] # [1] "RDSA.L"
+highest_closeness23
+lowest_closeness23
 
+highest_closeness22 = "6098.T" 
+lowest_closeness22 = "RDSA.L"
+
+highest_closeness21 = "6098.T" 
+lowest_closeness21 = "RDSA.L"
+  
 # Highest and lowest betweenness
-V(g)$name[betweenness(g)==max(betweenness(g))] # [1] "6098.T"
-V(g)$name[betweenness(g)==min(betweenness(g))] 
-# date: 21-Nov-19
-# [1] "TSCO.L"  "9984.T"  "SIRI"    "RDSA.L"  "1093.HK"
+highest_betweenness23 = V(g)$name[betweenness(g)==max(betweenness(g))] # [1] "6098.T"
+lowest_betweenness23 = V(g)$name[betweenness(g)==min(betweenness(g))] # [1] "TSCO.L"  "9984.T"  "SIRI"    "RDSA.L"  "1093.HK"
+highest_betweenness23
+lowest_betweenness23
 
-# date: 22-Nov-19
-# [1] "SIRI"    "RDSA.L"  "1093.HK" "9984.T"  "TSCO.L"
+highest_betweenness22 = "6098.T"
+lowest_betweenness22 = "SIRI, RDSA.L, 1093.HK, 9984.T, TSCO.L"
 
-V(g)$name[edge_betweenness(g)==max(edge_betweenness(g))] 
-# date: 21-Nov-19
-# [1] "CMCSA"
+highest_betweenness21 = "6098.T"
+lowest_betweenness21 =  "TSCO.L, 9984.T, SIRI, RDSA.L" 
 
-# date: 22-Nov-19
-# [1] "1398.HK"
-V(g)$name[edge_betweenness(g)==min(edge_betweenness(g))] # [1] NA
+maximum_betweenness23 = V(g)$name[edge_betweenness(g)==max(edge_betweenness(g))] # [1] "CMCSA"
+minimum_betweenness23 = V(g)$name[edge_betweenness(g)==min(edge_betweenness(g))] # [1] NA
+maximum_betweenness23
+minimum_betweenness23
+
+maximum_betweenness22 = "CMCSA"
+minimum_betweenness22 = NA
+
+maximum_betweenness21 = "CMCSA"
+minimum_betweenness21 = NA
 
 #5. Density of a graph
-edge_density(g, loops=TRUE) # [1] 0.172043
+edge_density23 = edge_density(g, loops=TRUE) # [1] 0.172043
+edge_density23
+edge_density22 = "0.172043"
+edge_density21 = "0.172043"
 
+Response_21_Nov = c(lc21,highest_degree21,lowest_degree21,highest_closeness21,edge_density21)
+Response_22_Nov = c(lc22,highest_degree22,lowest_degree22,highest_closeness22,edge_density22)
 
-
-
+business <- data.frame(Questions,Response_21_Nov,Response_22_Nov)
+name <- c("Business Queries", "21st Nov Response", "22nd Nov Response")
+colnames(business) <- name
+write.csv(business, "business.csv", row.names=FALSE, col.names = TRUE)
 
 
 
