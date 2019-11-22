@@ -67,6 +67,7 @@ plot(g,
 
 # 1. Maximal Clique
 largest_cliques(g)
+# date: 21-Nov-19
 #[[1]]
 #+ 4/30 vertices, named, from eb5624a:
 #  [1] 0386.HK   000651.SZ 1398.HK   000333.SZ
@@ -74,6 +75,15 @@ largest_cliques(g)
 #[[2]]
 #+ 4/30 vertices, named, from eb5624a:
 #  [1] 000002.SZ 000651.SZ 2628.HK   0883.HK
+
+# date: 22-Nov-19
+#[[1]]
+#+ 4/30 vertices, named, from 4cd411f:
+#  [1] 1398.HK   000333.SZ 000651.SZ 0386.HK  
+
+#[[2]]
+#+ 4/30 vertices, named, from 4cd411f:
+#  [1] 000002.SZ 000651.SZ 0883.HK   2628.HK
 
 
 #2&3. Vertices with highest degree and lowest degree
@@ -84,7 +94,12 @@ V(g)$name[degree(g)==min(degree(g))] # [1] "RDSA.L"
 #4. Vertices with highest centrality
 degree.cent <- centr_degree(g, mode = "all")
 degree.cent$res
+
+# date: 21-Nov-19
 #[1]  2  5  7  9  2  4  5  9  5  3  4  7 10  7  3  9  5  7  3  3  3  8  8  4  7  1  9  3  6  2
+
+# date: 22-Nov-19
+# [1]  3  3  3  8  8  4  5  9  7  1  5  3 10  7  9  3  6  2  4  7  3  9  5  7  2  5  7  9  2  4
 
 # Highest and lowest closeness 
 V(g)$name[closeness(g, mode="all")==max(closeness(g, mode="all"))] # [1] "6098.T"
@@ -92,9 +107,19 @@ V(g)$name[closeness(g, mode="all")==min(closeness(g, mode="all"))] # [1] "RDSA.L
 
 # Highest and lowest betweenness
 V(g)$name[betweenness(g)==max(betweenness(g))] # [1] "6098.T"
-V(g)$name[betweenness(g)==min(betweenness(g))] # [1] "TSCO.L"  "9984.T"  "SIRI"    "RDSA.L"  "1093.HK"
+V(g)$name[betweenness(g)==min(betweenness(g))] 
+# date: 21-Nov-19
+# [1] "TSCO.L"  "9984.T"  "SIRI"    "RDSA.L"  "1093.HK"
 
-V(g)$name[edge_betweenness(g)==max(edge_betweenness(g))] # [1] "CMCSA"
+# date: 22-Nov-19
+# [1] "SIRI"    "RDSA.L"  "1093.HK" "9984.T"  "TSCO.L"
+
+V(g)$name[edge_betweenness(g)==max(edge_betweenness(g))] 
+# date: 21-Nov-19
+# [1] "CMCSA"
+
+# date: 22-Nov-19
+# [1] "1398.HK"
 V(g)$name[edge_betweenness(g)==min(edge_betweenness(g))] # [1] NA
 
 #5. Density of a graph
