@@ -28,14 +28,14 @@ library(AzureStor)
 download_from_url(
   "https://bigdataissstorageasia.blob.core.windows.net/graphnodes/nodes.csv",
   "nodes.csv",
-  key="zm5Yr4YadxB/ZEvhyOISOw9hh5MCeVUA07A76EsBVBpX/jP6aDtHRBUCGIE5cp1mMMyzQQ2A7DCOz632hLa59A==", 
+  key="bbtD6brqITz4QHFU2tR4VZG5dN3DvAewjyuyHt/6+BpgUJrKcVCC4iJtZNtlNLOpYSJDhg4FLg0Avf3e+uJoUA==", 
   overwrite=T)
 
 # edges.csv
 download_from_url(
   "https://bigdataissstorageasia.blob.core.windows.net/graphedges/edges.csv",
   "edges.csv",
-  key="zm5Yr4YadxB/ZEvhyOISOw9hh5MCeVUA07A76EsBVBpX/jP6aDtHRBUCGIE5cp1mMMyzQQ2A7DCOz632hLa59A==", 
+  key="bbtD6brqITz4QHFU2tR4VZG5dN3DvAewjyuyHt/6+BpgUJrKcVCC4iJtZNtlNLOpYSJDhg4FLg0Avf3e+uJoUA==", 
   overwrite=T)
 
 
